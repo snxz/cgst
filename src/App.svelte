@@ -46,7 +46,10 @@
         flex-direction: column;
         justify-content: center;
         width: 355px;
-        padding-bottom: 10px;
+		padding-bottom: 10px;
+		background-color: white;
+		color: black;
+		height: auto;
     }
 
     .footer {
@@ -54,7 +57,7 @@
     }
 
     .footer a {
-        color: white;
+        color: black;
     }
 
     hr {

@@ -1,31 +1,38 @@
 <script>
-	export let name;
-</script>
+	import ToggleSelect from "./components/ToggleSelect.svelte";
+	import Switch from "./components/Switch.svelte";
+	import ListBox from "./components/ListBox.svelte";
 
+	let enabled = true;
+</script>
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<h1>Schedule Themer</h1>
+	<hr>
+	<ListBox/>
+	<Switch checked={enabled}/>
+	<p>Extension enabled: {enabled}</p>
+	<p class=footer>Check out the code on <a href="https://github.com/snxz/cgst">GitHub</a>!</p>
 </main>
 
 <style>
 	main {
 		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-		width: 200px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		width: 355px;
+		padding-bottom: 10px;
 	}
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
+	.footer {
+		font-size: small;
 	}
 
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
+	.footer a {
+		color: white;
+	}
+
+	hr {
+		margin: 10px 20px;
 	}
 </style>

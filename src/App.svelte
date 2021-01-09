@@ -1,8 +1,11 @@
 <script>
-    import Switch from "./components/Switch.svelte";
     import ListBox from "./components/ListBox.svelte";
+    import ThemeCreator from "./components/ThemeCreator.svelte";
 
     let enabled = true;
+
+    let page = "index";
+
     // Code for future use for calling functions in the content script.
     // window.onload = function() {
 
@@ -20,11 +23,19 @@
 </script>
 
 <main>
-    <h1>Schedule Themer</h1>
-    <hr>
-    <ListBox/>
-    <Switch checked={enabled}/>
-    <p>Extension enabled: {enabled}</p>
+    <h1 on:click={() => {page="index"}}>Schedule Themer</h1>
+
+    {#if page === "index"}
+        <p class="page-link" on:click={() => {page = "creator"}}>Create a theme</p>
+        <hr>
+        <ListBox/>
+        <!--        <Switch checked={enabled}/>-->
+        <!--        <p>Extension enabled: {enabled}</p>-->
+    {:else if page === "creator" }
+        <p class="page-link" on:click={() => {page = "index"}}>Index</p>
+        <ThemeCreator/>
+    {/if}
+
     <p class=footer>Check out the code on <a href="https://github.com/snxz/cgst">GitHub</a>!</p>
 </main>
 
@@ -48,5 +59,9 @@
 
     hr {
         margin: 10px 20px;
+    }
+
+    .page-link {
+        text-decoration: underline;
     }
 </style>

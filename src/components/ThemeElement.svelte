@@ -1,6 +1,7 @@
 <script>
     import ColorSquare from "./ColorSquare.svelte";
 </script>
+
 <main>
     <p>Rainbow Drops</p>
     <div class="colors">

@@ -12,10 +12,10 @@
     "browser_action": {
         "browser_style": true,
         "default_icon": {
-            "48": "/SethJSFavicon.png"
+            "48": "/favicon.png"
         },
         "default_title": "Schedule Themer",
-        "default_popup": "/popup.html"
+        "default_popup": "/index.html"
     },
 
     "permissions": [

@@ -1,13 +1,13 @@
-window.onload = function() {
-    chrome.runtime.onMessage.addListener(function(msg, _, sendResponse) {
-        console.log('onMessage', msg);
-        if (msg.message == "test") {
-            sendResponse({message: "goodbye"});
-        } else{
-           sendResponse({});
-        }
-    });
-};
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      console.log(sender.tab ?
+                  "from a content script:" + sender.tab.url :
+                  "from the extension");
+      if (request.greeting == "hello")
+        refreshStyles();
+        sendResponse({farewell: "goodbye"});
+    }
+);
 
 async function refreshStyles() {
     console.log('test')

@@ -1,0 +1,25 @@
+{
+    "name": "Catlin Schedule Themer",
+    "version": "0.0.1",
+    "manifest_version": 2,
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["/content_scripts.js"]
+        }
+    ],
+
+    "browser_action": {
+        "browser_style": true,
+        "default_icon": {
+            "48": "/SethJSFavicon.png"
+        },
+        "default_title": "Schedule Themer",
+        "default_popup": "/popup.html"
+    },
+
+    "permissions": [
+        "storage",
+        "activeTab"
+    ]
+}

@@ -8,7 +8,7 @@ on:
       - "main"
 
 jobs:
-  build:
+  update:
     name: Update
     runs-on: ubuntu-latest
     steps:
@@ -34,3 +34,5 @@ jobs:
           add: "sync/output.json"
           author_name: deploy-bot
           author_email: deploy-bot@example.com
+
+      - name: Create extension archive for Chrome

@@ -1,6 +1,11 @@
 // Initialize important fields...
 let themes = {};
 let currentTheme = "Classic";
+chrome.storage.local.get('current', function (data) {
+    if (data.current) {
+        currentTheme = data.current
+    }
+});
 let theme_key = {
     "#ffce51": "Block1",
     "#a67fb9": "Block2",
@@ -88,6 +93,13 @@ chrome.runtime.onMessage.addListener(
         sendResponse({success: "true"});
     }
 );
+
+chrome.storage.onChanged.addListener((changes, area) => {
+    if (area == 'local' && 'current' in changes) {
+        loadTheme(changes.current.newValue);
+    }
+})
+
 
 // rgb2hex - converts between the browser's rgb values and hex
 function rgb2hex(rgb) {

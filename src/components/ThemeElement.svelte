@@ -13,13 +13,8 @@
         "Free": "#1C1C1C",
     }
 
-    function applyStyle() {
-        console.log(id)
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, {action: "set", theme: id}, function(response) {
-            console.log(response);
-            });
-        });
+    async function applyStyle() {
+        await chrome.storage.local.set({ current: id })
     }
 </script>
 

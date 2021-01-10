@@ -36,7 +36,7 @@
         <ThemeCreator/>
     {/if}
 
-    <p class=footer>Check out the code on <a href="https://github.com/snxz/cgst">GitHub</a>!</p>
+    <p class=footer>Check out the code on <a href="https://github.com/snxz/cgst" target="_blank">GitHub</a>!</p>
 </main>
 
 <style>

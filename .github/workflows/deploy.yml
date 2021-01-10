@@ -18,5 +18,11 @@ jobs:
       - name: Setup python environment
         run: pip3 install gspread oauth2client
 
+      - name: Write secret to file
+        run: 'echo "$CREDS" > sync/credentials.json'
+        shell: bash
+        env:
+          CREDS: ${{secrets.SHEETS_CREDENTIAL}}
+
       - name: Run sync job
         run: cd sync ; python3 sync.py

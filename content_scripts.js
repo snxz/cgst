@@ -56,7 +56,7 @@ const loadCSSVariables = () => {
     nav[0].style.backgroundColor = 'var(--cgst-' + 'Free' + ')';
     nav[0].style.color = 'var(--cgst-' + 'Text' + ')';
     nav[0].childNodes.forEach((node) => {
-        console.log(node)
+        // console.log(node)
         if (node.nodeName !== "#text") {
             node.style.color = 'var(--cgst-' + 'Text' + ')';
         }

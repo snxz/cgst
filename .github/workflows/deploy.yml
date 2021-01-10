@@ -24,7 +24,7 @@ jobs:
         env:
           CREDS: ${{secrets.SHEETS_CREDENTIAL}}
 
-      - name: Run sync job
+      - name: Run sync script
         run: cd sync ; python3 sync.py
 
       - name: Commit update

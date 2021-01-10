@@ -1,5 +1,6 @@
 import json
 import string
+import re
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -25,7 +26,12 @@ for row in sheet[2:]:
         if title not in themes:
             themes[title] = {}
 
-        themes[title][header[i].replace(" ", "")] = row[i + 1]
+        target_color = row[i + 1]
+        if re.search("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$", target_color):
+            themes[title][header[i].replace(" ", "")] = target_color
+        else:
+            print(f'Theme {title} has an invalid color code for key {header[i]} with value {target_color}')
+            exit(1)
 
 with open("output.json", "w") as output_file:
     output_file.write(json.dumps(themes))

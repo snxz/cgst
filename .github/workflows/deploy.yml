@@ -1,0 +1,22 @@
+name: Update themes
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  push:
+    branches:
+      - "main"
+
+jobs:
+  build:
+    name: Update
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Setup python environment
+        run: pip3 install gspread oauth2client
+
+      - name: Run sync job
+        run: cd sync ; python3 sync.py

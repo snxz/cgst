@@ -1,5 +1,6 @@
 <script>
-    let theme = {
+    export let name = "Theme Name";
+    export let theme = {
         "Block 1": "#d2bb00",
         "Block 2": "#8038a4",
         "Block 3": "#fb7821",
@@ -13,10 +14,10 @@
 </script>
 
 <main>
-    <p>Rainbow Drops</p>
+    <p>{name}</p>
     <div class="colors">
         {#each Object.keys(theme) as key, i}
-            <span class={"color-preview" + (i == Object.keys(theme).length-1 ? " last-color" : "")} style="background-color:{theme[key]}"></span>
+            <span title={theme[key]} class={"color-preview" + (i == Object.keys(theme).length-1 ? " last-color" : "")} style="background-color:{theme[key]}"></span>
         {/each}
     </div>
 </main>
@@ -30,15 +31,24 @@
         height: 30px;
         border: 1px solid #ccc;
         box-shadow: 4px 4px 8px #ccc;
-        margin: 20px 25px;
+        margin: 15px 25px;
         width: auto;
-        border-radius: 15px;
+        border-radius: 10px;
         cursor: pointer;
-        transition: ease height 0.4s;
+        transition: ease height 0.3s, ease margin 0.3s;
     }
 
     main:hover {
-        height: 50px;
+        height: 40px;
+        margin: 15px 15px;
+    }
+
+    main:hover span {
+        width: 20px;
+    }
+
+    main:hover p {
+        font-size: 15px;
     }
 
     .colors {
@@ -48,13 +58,14 @@
     }
 
     p {
-        font-size: large;
+        font-size: 16px;
         padding-left: 15px;
+        transition: ease font-size 0.3s;
     }
 
     span.last-color {
-        border-top-right-radius: 15px;
-        border-bottom-right-radius: 15px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
     }
 
     div {
@@ -67,5 +78,6 @@
         box-sizing: border-box;
         height: 100%;
         width: 15px;
+        transition: ease width .3s;
     }
 </style>

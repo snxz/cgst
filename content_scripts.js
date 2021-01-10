@@ -1,41 +1,25 @@
-/*******************************************************/
-// THEMES
-const themes = {
-    theme_key: {
-        "#ffce51": "Block1",
-        "#a67fb9": "Block2",
-        "#e67326": "Block3",
-        "#00abbd": "Block4",
-        "#aac02c": "Block5",
-        "#ef4957": "Block6",
-        "#ff75f2": "Block7",
-        "#c0c0c0": "Activity",
-        "#ffffff": "Free",
-    },
-    default_theme: {
-        "Block1": "#ffce51",
-        "Block2": "#a67fb9",
-        "Block3": "#e67326",
-        "Block4": "#00abbd",
-        "Block5": "#aac02c",
-        "Block6": "#ef4957",
-        "Block7": "#ff75f2",
-        "Activity": "#c0c0c0",
-        "Free": "#ffffff",  
-    },
-    rainbow_drops_theme: {
-        "Block1": "#d2bb00",
-        "Block2": "#8038a4",
-        "Block3": "#fb7821",
-        "Block4": "#00abbd",
-        "Block5": "#44bd00",
-        "Block6": "#ef4957",
-        "Block7": "#e352d6",
-        "Activity": "#6a6a6a",
-        "Free": "#1C1C1C",
-    }
+let themes = {};
+
+window.onload = (e) => {
+    fetch('https://raw.githubusercontent.com/snxz/cgst/main/sync/output.json')
+    .then(res => res.json())
+    .then(data => {
+        themes = data;
+        console.log(data)
+        themes.theme_key = {
+            "#ffce51": "Block1",
+            "#a67fb9": "Block2",
+            "#e67326": "Block3",
+            "#00abbd": "Block4",
+            "#aac02c": "Block5",
+            "#ef4957": "Block6",
+            "#ff75f2": "Block7",
+            "#c0c0c0": "Activity",
+            "#ffffff": "Free",
+            "#212529": "Text",
+        }
+    })
 }
-/*******************************************************/
 
 const loadCSSVariables = () => {
     let blocks = document.getElementsByClassName('event');
@@ -45,19 +29,29 @@ const loadCSSVariables = () => {
         if (color.includes('rgb')) {
             hex = rgb2hex(color);
         }
-        console.log(color);
-        console.log(themes.theme_key[hex])
+        // boxShadow = blocks[i].style['box-shadow'];
+        // if (boxShadow !== "") {
+        //     boxShadow = rgb2hex(boxShadow.split(/ (?![^\(]*\))/)[0])
+        //     console.log(boxShadow)
+        //     if (themes.theme_key[boxShadow] !== undefined) {
+        //         blocks[i].style.boxShadow = 'var(--cgst-' + block + ') 0px 0px 0.3em 0.3em inset';
+        //     }
+        // }
+        
+        // console.log(color);
+        // console.log(themes.theme_key[hex])
         if (themes.theme_key[hex] !== undefined) {
             let block = themes.theme_key[hex];
+            blocks[i].style.color = 'var(--cgst-' + 'ClassText' + ')';
             blocks[i].style.backgroundColor = 'var(--cgst-' + block + ')';
         }
     }
 
-    loadTheme("rainbow_drops_theme")
+    loadTheme("Rainbow Drops")
 }
 
 setTimeout(loadCSSVariables, 500);
-setTimeout(() => {loadTheme('default_theme')}, 2000)
+setTimeout(() => {loadTheme('horrible looking')}, 2000)
 
 /*******************************************************/
 
@@ -74,9 +68,9 @@ chrome.runtime.onMessage.addListener(
       console.log(sender.tab ?
                   "from a content script:" + sender.tab.url :
                   "from the extension");
-      if (request.action == "add")
-        
-        sendResponse({farewell: "goodbye"});
+      if (request.action == "set")
+        loadTheme(request.theme);
+        sendResponse({success: "true"});
     }
 );
 

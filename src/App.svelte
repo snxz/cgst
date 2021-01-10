@@ -45,11 +45,11 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        width: 355px;
+        width: 330px;
 		padding-bottom: 10px;
 		background-color: white;
 		color: black;
-		height: auto;
+        height: auto;
     }
 
     .footer {

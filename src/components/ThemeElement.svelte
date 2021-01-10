@@ -1,5 +1,6 @@
 <script>
     export let name = "Theme Name";
+    export let id = "default_theme";
     export let theme = {
         "Block 1": "#d2bb00",
         "Block 2": "#8038a4",
@@ -12,22 +13,23 @@
         "Free": "#1C1C1C",
     }
 
-        // 	function refreshStyles() {
-    // 		console.log('test')
-    // 		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    // 			chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
-    // 			console.log(response.farewell);
-    // 			});
-    // 		});
-    // 	}
-    // }
+    function applyStyle() {
+        console.log(id)
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, {action: "set", theme: id}, function(response) {
+            console.log(response);
+            });
+        });
+    }
 </script>
 
-<main>
+<main on:click={applyStyle}>
     <p>{name}</p>
     <div class="colors">
         {#each Object.keys(theme) as key, i}
-            <span title={theme[key]} class={"color-preview" + (i == Object.keys(theme).length-1 ? " last-color" : "")} style="background-color:{theme[key]}"></span>
+        {#if i <= 9}
+            <span title={theme[key]} class={"color-preview" + (i == 9 ? " last-color" : "")} style="background-color:{theme[key]}"></span>
+        {/if}
         {/each}
     </div>
 </main>
@@ -50,15 +52,10 @@
 
     main:hover {
         height: 30px;
-        margin: 15px 15px;
     }
 
     main:hover span {
         width: 20px;
-    }
-
-    main:hover p {
-        font-size: 15px;
     }
 
     .colors {
@@ -68,9 +65,12 @@
     }
 
     p {
-        font-size: 16px;
+        font-size: 15px;
         padding-left: 15px;
         transition: ease font-size 0.3s;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     span.last-color {

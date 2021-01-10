@@ -31,4 +31,4 @@ jobs:
         uses: EndBug/add-and-commit@v6
         with:
           message: "ci: update themes"
-          add: "output.json"
+          add: "sync/output.json"

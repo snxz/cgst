@@ -34,5 +34,3 @@ jobs:
           add: "sync/output.json"
           author_name: deploy-bot
           author_email: deploy-bot@example.com
-
-#      - name: Create extension archive for Chrome

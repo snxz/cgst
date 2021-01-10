@@ -1,0 +1,36 @@
+name: Update themes
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  push:
+    branches:
+      - "main"
+
+jobs:
+  build:
+    name: Update
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Setup python environment
+        run: pip3 install gspread oauth2client
+
+      - name: Write secret to file
+        run: 'echo "$CREDS" > sync/credentials.json'
+        shell: bash
+        env:
+          CREDS: ${{secrets.SHEETS_CREDENTIAL}}
+
+      - name: Run sync script
+        run: cd sync ; python3 sync.py
+
+      - name: Commit update
+        uses: EndBug/add-and-commit@v6
+        with:
+          message: "ci: update themes"
+          add: "sync/output.json"
+          author_name: deploy-bot
+          author_email: deploy-bot@example.com

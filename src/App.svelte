@@ -6,6 +6,20 @@
 
     let page = "index";
 
+    let current = "Classic";
+
+    chrome.storage.local.get('current', function (data) {
+        if (data.current) {
+            current = data.current;
+        }
+    })
+
+    chrome.storage.onChanged.addListener((changes, area) => {
+        if (area == 'local' && 'current' in changes) {
+            current = changes.current.newValue;
+        }
+    })
+
     // Code for future use for calling functions in the content script.
     // window.onload = function() {
 
@@ -24,7 +38,7 @@
 
 <main>
     <h1 on:click={() => {page="index"}}>Schedule Themer</h1>
-
+    <h2>Current theme: {current}</h2>
     {#if page === "index"}
         <p class="page-link" on:click={() => {page = "creator"}}>Create a theme</p>
         <hr>
@@ -50,6 +64,14 @@
 		background-color: white;
 		color: black;
         height: auto;
+    }
+
+    h2 {
+        margin: 0 auto;
+        max-width: 90%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .footer {

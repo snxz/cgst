@@ -11,6 +11,16 @@
         "Activity": "#6a6a6a",
         "Free": "#1C1C1C",
     }
+
+        // 	function refreshStyles() {
+    // 		console.log('test')
+    // 		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    // 			chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
+    // 			console.log(response.farewell);
+    // 			});
+    // 		});
+    // 	}
+    // }
 </script>
 
 <main>
@@ -39,7 +49,7 @@
     }
 
     main:hover {
-        height: 40px;
+        height: 30px;
         margin: 15px 15px;
     }
 

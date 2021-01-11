@@ -46,7 +46,7 @@
         <!--        <Switch checked={enabled}/>-->
         <!--        <p>Extension enabled: {enabled}</p>-->
     {:else if page === "creator" }
-        <p class="page-link" on:click={() => {page = "index"}}>Index</p>
+        <p class="page-link" on:click={() => {page = "index"}}>Choose a theme</p>
         <ThemeCreator/>
     {/if}
 
@@ -88,5 +88,6 @@
 
     .page-link {
         text-decoration: underline;
+        cursor: pointer;
     }
 </style>

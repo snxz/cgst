@@ -1,24 +1,53 @@
 <script>
+    import Switch from './Switch.svelte';
     let theme = {
-        "Block 1": "#d2bb00",
-        "Block 2": "#8038a4",
-        "Block 3": "#fb7821",
-        "Block 4": "#00abbd",
-        "Block 5": "#44bd00",
-        "Block 6": "#ef4957",
-        "Block 7": "#e352d6",
+        "Block1": "#d2bb00",
+        "Block2": "#8038a4",
+        "Block3": "#fb7821",
+        "Block4": "#00abbd",
+        "Block5": "#44bd00",
+        "Block6": "#ef4957",
+        "Block7": "#e352d6",
         "Activity": "#6a6a6a",
         "Free": "#1C1C1C",
     }
+    let checked = false;
+    chrome.storage.local.get('custom', function(data) {
+        if (data.custom) {
+            theme = data.custom
+        } else {
+            chrome.storage.local.set({ custom: theme })
+        }
+    })
+    chrome.storage.local.get('useCustom', function(data) {
+        if (data.useCustom !== undefined) {
+            checked = data.useCustom;
+        } else {
+            chrome.storage.local.set({ useCustom: checked })
+        }
+    })
+    
+    function setUseCustom(e) {
+        chrome.storage.local.set({ useCustom: checked })
+    }
+
+    function updateColor(e) {
+        chrome.storage.local.set({ custom: theme })
+    }
+
+    // $: console.log(checked)
 </script>
 
 <main>
-    <input type="text" placeholder="Give your theme a cool name...">
-
+    <!-- <input type="text" placeholder="Give your theme a cool name..."> -->
+    <div class="switch">
+        <p>Use custom theme?</p>
+        <Switch bind:checked={checked} on:change={setUseCustom} />
+    </div>
     {#each Object.keys(theme) as key}
         <div>
             <p>{key}</p>
-            <input type="color" bind:value={theme[key]}>
+            <input type="color" bind:value={theme[key]} id={key} on:change={updateColor}>
         </div>
     {/each}
 </main>
@@ -35,6 +64,10 @@
         justify-content: space-between;
         align-items: center;
         width: 200px;
+    }
+
+    div.switch {
+        align-items: center;
     }
 
     input[type="color"] {

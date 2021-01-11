@@ -1,11 +1,27 @@
 // Initialize important fields...
 let themes = {};
+
 let currentTheme = "Classic";
 chrome.storage.local.get('current', function (data) {
     if (data.current) {
         currentTheme = data.current
     }
 });
+
+let custom = {
+    "Block1": "#d2bb00",
+    "Block2": "#8038a4",
+    "Block3": "#fb7821",
+    "Block4": "#00abbd",
+    "Block5": "#44bd00",
+    "Block6": "#ef4957",
+    "Block7": "#e352d6",
+    "Activity": "#6a6a6a",
+    "Free": "#1C1C1C",
+};
+
+
+
 let theme_key = {
     "#ffce51": "Block1",
     "#a67fb9": "Block2",
@@ -67,6 +83,12 @@ const loadCSSVariables = () => {
         }
     })
 
+    let dayLabels = document.getElementsByClassName('dayLabel');
+    for (let i = 0; i < dayLabels.length; i++) {
+        dayLabels[i].style.color = 'var(--cgst-' + 'Text' + ')';
+        dayLabels[i].style.borderBottom = 'none';
+    }
+
     // TODO: Find a way to make the dropdown icon change colors... oh Nathan, why use Bootstrap!!
     // let toggler = document.getElementsByClassName('navbar-toggler-item')
     // console.log(toggler)
@@ -75,28 +97,61 @@ const loadCSSVariables = () => {
 }
 
 // loadTheme - sets all necessary CSS vars to the theme's colors
-const loadTheme = (theme) => {
-    Object.keys(themes[theme]).forEach(block => {
-        document.documentElement.style.setProperty('--cgst-' + block, themes[theme][block])
-    })
-    currentTheme = theme;
+const loadTheme = async (theme) => {
+    if (theme == 'customTheme') {
+        // let custom = customThemeBase;
+       
+        // let useCustom = false;
+        // await chrome.storage.local.get('useCustom', function (data) {
+        //     if (data.useCustom !== undefined) {
+        //         useCustom = data.useCustom
+        //     } else {
+        //         chrome.storage.local.set({ useCustom: useCustom })
+        //     }
+        // })
+        // console.log('useCustom: ' + useCustom)
+        // console.log(custom)
+        if (true) {
+            Object.keys(custom).forEach(block => {
+                console.log('test:' + custom[block])
+                document.documentElement.style.setProperty('--cgst-' + block, custom[block])
+            })
+            currentTheme = theme;
+        }
+
+    } else {
+        Object.keys(themes[theme]).forEach(block => {
+            document.documentElement.style.setProperty('--cgst-' + block, themes[theme][block])
+        })
+        currentTheme = theme;
+    }   
 }
 
 // onMessage - receives messages from the popup to change themes
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-      console.log(sender.tab ?
-                  "from a content script:" + sender.tab.url :
-                  "from the extension");
-      if (request.action == "set")
-        loadTheme(request.theme);
-        sendResponse({success: "true"});
-    }
-);
+// chrome.runtime.onMessage.addListener(
+//     function(request, sender, sendResponse) {
+//       console.log(sender.tab ?
+//                   "from a content script:" + sender.tab.url :
+//                   "from the extension");
+//       if (request.action == "set")
+//         loadTheme(request.theme);
+//         sendResponse({success: "true"});
+//     }
+// );
 
+// onChange - loads the theme if its state is changed by the front-end
 chrome.storage.onChanged.addListener((changes, area) => {
     if (area == 'local' && 'current' in changes) {
         loadTheme(changes.current.newValue);
+    } else if (area == 'local' && 'custom' in changes) {
+        chrome.storage.local.get('custom', function (data) {
+            if (data.custom !== undefined) {
+                custom = data.custom;
+            } else {
+                chrome.storage.local.set({ custom: customThemeBase })
+            }
+            loadTheme('customTheme')
+        })
     }
 })
 

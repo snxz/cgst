@@ -4,7 +4,7 @@
 
 <main>
     <label class="switch">
-        <input type=checkbox bind:checked={checked}>
+        <input type=checkbox bind:checked={checked} on:change>
         <span class=slider></span>
     </label>
 </main>
@@ -15,7 +15,6 @@
         display: inline-block;
         width: 60px;
         height: 34px;
-        margin-top: 25px;
     }
 
     .switch input {

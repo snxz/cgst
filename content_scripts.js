@@ -89,6 +89,10 @@ const loadCSSVariables = () => {
         dayLabels[i].style.borderBottom = 'none';
     }
 
+    let days = document.getElementsByClassName('days ');
+    days[0].style.border = '1px solid var(--cgst-' + 'Border' + ')';
+    days[0].style.height = 'calc(100% - 64px)';
+
     // TODO: Find a way to make the dropdown icon change colors... oh Nathan, why use Bootstrap!!
     // let toggler = document.getElementsByClassName('navbar-toggler-item')
     // console.log(toggler)
